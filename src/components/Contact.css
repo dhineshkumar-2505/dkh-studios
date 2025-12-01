@@ -1,0 +1,108 @@
+.contact-section {
+    padding: var(--spacing-4xl) 0;
+    position: relative;
+}
+
+.contact-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--spacing-lg);
+    margin-bottom: var(--spacing-3xl);
+}
+
+.contact-card {
+    padding: var(--spacing-xl);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: var(--spacing-sm);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.contact-card:hover {
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: var(--shadow-lg), 0 0 30px rgba(255, 0, 0, 0.2);
+    border-color: var(--red-primary);
+}
+
+.contact-avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--black-light), var(--black));
+    border: 2px solid var(--red-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    margin-bottom: var(--spacing-sm);
+}
+
+.avatar-initial {
+    font-family: var(--font-display);
+    font-size: 2.5rem;
+    font-weight: 700;
+    background: var(--gradient-text);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.avatar-glow {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    box-shadow: 0 0 20px var(--red-glow);
+    opacity: 0.5;
+    transition: opacity 0.3s ease;
+}
+
+.contact-card:hover .avatar-glow {
+    opacity: 1;
+    box-shadow: 0 0 30px var(--hot-pink);
+}
+
+.contact-name {
+    font-size: 1.5rem;
+    color: var(--text-primary);
+}
+
+.contact-role {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    margin-bottom: var(--spacing-sm);
+}
+
+.contact-phone {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    font-size: 1.1rem;
+    padding: 0.8rem;
+}
+
+.phone-icon {
+    font-size: 1.2rem;
+}
+
+.contact-cta-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-top: var(--spacing-2xl);
+}
+
+/* Responsive */
+@media (max-width: 960px) {
+    .contact-grid {
+        grid-template-columns: 1fr;
+        max-width: 500px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}

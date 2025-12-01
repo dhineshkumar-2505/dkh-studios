@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Spider-Man Carousel</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/8.4.5/swiper-bundle.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #1e1e1e 0%, #2d1b3d 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .carousel-container {
+            width: 100%;
+            max-width: 1200px;
+            padding: 50px 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #ff0000;
+            font-size: 3rem;
+            margin-bottom: 50px;
+            text-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
+            font-weight: bold;
+        }
+
+        .swiper-container {
+            width: 100%;
+            padding-top: 50px;
+            padding-bottom: 50px;
+        }
+
+        .swiper-slide {
+            background-position: center;
+            background-size: cover;
+            width: 320px;
+            height: 450px;
+        }
+
+        .swiper-slide img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+            border: 3px solid rgba(255, 0, 0, 0.3);
+        }
+
+        .swiper-slide-active img {
+            border-color: #ff0000;
+            box-shadow: 0 15px 50px rgba(255, 0, 0, 0.6);
+        }
+
+        .swiper-button-next,
+        .swiper-button-prev {
+            color: #ff0000;
+            font-weight: bold;
+        }
+
+        .swiper-button-next:after,
+        .swiper-button-prev:after {
+            font-size: 30px;
+        }
+
+        .swiper-pagination-bullet {
+            background: #ff0000;
+        }
+
+        .swiper-pagination-bullet-active {
+            background: #ff0000;
+        }
+    </style>
+</head>
+<body>
+    <div class="carousel-container">
+        <h1>SPIDER-MAN</h1>
+        <div class="swiper-container">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide">
+                    <img src="https://images.unsplash.com/photo-1635805737707-575885ab0820?w=500&h=700&fit=crop" alt="Spider-Man 1">
+                </div>
+                <div class="swiper-slide">
+                    <img src="https://images.unsplash.com/photo-1608889476561-6242cfdbf622?w=500&h=700&fit=crop" alt="Spider-Man 2">
+                </div>
+                <div class="swiper-slide">
+                    <img src="https://images.unsplash.com/photo-1612036782180-6f0b6cd846fe?w=500&h=700&fit=crop" alt="Spider-Man 3">
+                </div>
+                <div class="swiper-slide">
+                    <img src="https://images.unsplash.com/photo-1635863138275-d9b33299680b?w=500&h=700&fit=crop" alt="Spider-Man 4">
+                </div>
+                <div class="swiper-slide">
+                    <img src="https://images.unsplash.com/photo-1535131749006-b7f58c99034b?w=500&h=700&fit=crop" alt="Spider-Man 5">
+                </div>
+                <div class="swiper-slide">
+                    <img src="https://images.unsplash.com/photo-1608889825205-eebdb9fc5806?w=500&h=700&fit=crop" alt="Spider-Man 6">
+                </div>
+            </div>
+            <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-pagination"></div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/8.4.5/swiper-bundle.min.js"></script>
+    <script>
+        // Create click sound
+        const clickSound = new Audio();
+        clickSound.src = 'data:audio/wav;base64,UklGRhIAAABXQVZFZm10IBIAAAABAAEAQB8AAEAfAAABAAgAAABmYWN0BAAAAAAAAABkYXRhAAAAAA==';
+        
+        // Better click sound using Web Audio API
+        const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        
+        function playClickSound() {
+            const oscillator = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
+            
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+            
+            oscillator.frequency.value = 800;
+            oscillator.type = 'sine';
+            
+            gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.1);
+            
+            oscillator.start(audioContext.currentTime);
+            oscillator.stop(audioContext.currentTime + 0.1);
+        }
+
+        var swiper = new Swiper('.swiper-container', {
+            effect: 'coverflow',
+            grabCursor: true,
+            centeredSlides: true,
+            slidesPerView: 'auto',
+            coverflowEffect: {
+                rotate: 30,
+                stretch: 0,
+                depth: 150,
+                modifier: 1,
+                slideShadows: true,
+            },
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
+            loop: true,
+            speed: 600,
+            on: {
+                slideChange: function() {
+                    playClickSound();
+                }
+            }
+        });
+    </script>
+</body>
+</html>

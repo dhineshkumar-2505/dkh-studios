@@ -1,0 +1,208 @@
+.process-section {
+    background: var(--dark-bg);
+    position: relative;
+    overflow: hidden;
+    padding: var(--spacing-3xl) 0;
+}
+
+.highlight-text {
+    color: var(--neon-blue);
+    font-weight: 700;
+    text-shadow: var(--glow-blue);
+}
+
+.process-timeline {
+    position: relative;
+    max-width: 1000px;
+    margin: var(--spacing-3xl) auto;
+    padding: var(--spacing-xl) 0;
+}
+
+/* Vertical Line */
+.timeline-line {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateX(-50%);
+    border-radius: var(--radius-full);
+    overflow: hidden;
+}
+
+.timeline-line::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 50%;
+    background: linear-gradient(to bottom, transparent, var(--neon-blue), transparent);
+    animation: flow-line 3s linear infinite;
+}
+
+@keyframes flow-line {
+    0% {
+        top: -50%;
+    }
+
+    100% {
+        top: 150%;
+    }
+}
+
+.timeline-item {
+    display: flex;
+    justify-content: center;
+    padding-bottom: var(--spacing-3xl);
+    position: relative;
+    width: 100%;
+}
+
+.timeline-content {
+    width: 45%;
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-xl);
+    padding: var(--spacing-xl);
+    position: relative;
+    transition: all var(--transition-smooth);
+    z-index: 2;
+}
+
+.timeline-item.left {
+    justify-content: flex-start;
+}
+
+.timeline-item.right {
+    justify-content: flex-end;
+}
+
+.timeline-item.left .timeline-content {
+    margin-right: auto;
+}
+
+.timeline-item.right .timeline-content {
+    margin-left: auto;
+}
+
+/* Center Dot */
+.timeline-dot {
+    position: absolute;
+    left: 50%;
+    top: 2rem;
+    transform: translateX(-50%);
+    width: 20px;
+    height: 20px;
+    background: var(--dark-bg);
+    border: 3px solid var(--text-secondary);
+    border-radius: 50%;
+    z-index: 3;
+    transition: all var(--transition-base);
+}
+
+.timeline-item.active .timeline-dot {
+    background: var(--neon-blue);
+    border-color: var(--neon-blue);
+    box-shadow: 0 0 15px var(--neon-blue);
+    transform: translateX(-50%) scale(1.3);
+}
+
+/* Content Styling */
+.step-number-badge {
+    position: absolute;
+    top: -15px;
+    right: -15px;
+    background: var(--gradient-primary);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    color: white;
+    box-shadow: var(--shadow-md);
+}
+
+.step-icon-wrapper {
+    font-size: 2.5rem;
+    margin-bottom: var(--spacing-md);
+    transition: transform var(--transition-spring);
+}
+
+.timeline-item:hover .step-icon-wrapper {
+    transform: scale(1.2) rotate(10deg);
+}
+
+.step-title {
+    font-size: var(--font-size-xl);
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: var(--spacing-xs);
+}
+
+.step-description {
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+
+.step-detail {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease-out, opacity 0.4s ease-out;
+    opacity: 0;
+    margin-top: 0;
+    color: var(--neon-blue);
+    font-weight: 500;
+    font-size: var(--font-size-sm);
+}
+
+.step-detail.show {
+    max-height: 50px;
+    opacity: 1;
+    margin-top: var(--spacing-sm);
+}
+
+/* Hover Effects */
+.timeline-item:hover .timeline-content {
+    transform: translateY(-5px);
+    border-color: var(--neon-blue);
+    box-shadow: var(--shadow-xl), var(--glow-blue);
+}
+
+.process-footer {
+    text-align: center;
+    margin-top: var(--spacing-xl);
+    font-size: var(--font-size-lg);
+    font-weight: 600;
+    color: var(--text-primary);
+    text-shadow: var(--glow-purple);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .timeline-line {
+        left: 20px;
+    }
+
+    .timeline-item {
+        justify-content: flex-start !important;
+        padding-left: 50px;
+    }
+
+    .timeline-content {
+        width: 100%;
+    }
+
+    .timeline-dot {
+        left: 20px;
+    }
+
+    .timeline-item.left .timeline-content,
+    .timeline-item.right .timeline-content {
+        margin: 0;
+    }
+}

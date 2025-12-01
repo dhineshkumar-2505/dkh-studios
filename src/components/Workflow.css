@@ -1,0 +1,116 @@
+.workflow-section {
+    padding: var(--spacing-4xl) 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.workflow-steps {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--spacing-md);
+    position: relative;
+    margin-top: var(--spacing-2xl);
+}
+
+/* Connecting Line Background */
+.workflow-steps::before {
+    content: '';
+    position: absolute;
+    top: 40px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: rgba(255, 255, 255, 0.1);
+    z-index: 0;
+}
+
+.workflow-step {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+}
+
+.step-number-wrapper {
+    position: relative;
+    margin-bottom: var(--spacing-lg);
+    display: flex;
+    justify-content: center;
+}
+
+.step-number {
+    font-family: var(--font-display);
+    font-size: 2.5rem;
+    font-weight: 800;
+    background: var(--black);
+    padding: 0 1rem;
+    position: relative;
+    z-index: 2;
+}
+
+.step-card {
+    padding: var(--spacing-lg);
+    text-align: center;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-sm);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.step-card:hover {
+    transform: translateY(-10px);
+    box-shadow: var(--shadow-lg), 0 0 30px rgba(128, 0, 128, 0.2);
+    border-color: var(--purple-light);
+}
+
+.step-icon {
+    font-size: 2rem;
+    margin-bottom: var(--spacing-xs);
+}
+
+.step-title {
+    font-size: 1.25rem;
+    color: var(--text-primary);
+}
+
+.step-desc {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+/* Responsive */
+@media (max-width: 960px) {
+    .workflow-steps {
+        flex-direction: column;
+        gap: var(--spacing-xl);
+    }
+
+    .workflow-steps::before {
+        top: 0;
+        left: 40px;
+        width: 2px;
+        height: 100%;
+    }
+
+    .workflow-step {
+        flex-direction: row;
+        align-items: flex-start;
+        gap: var(--spacing-lg);
+        text-align: left;
+    }
+
+    .step-number-wrapper {
+        margin-bottom: 0;
+        min-width: 80px;
+    }
+
+    .step-card {
+        text-align: left;
+        align-items: flex-start;
+    }
+}

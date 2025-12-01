@@ -1,0 +1,113 @@
+.loader-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: var(--deep-black);
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out;
+}
+
+.loader-container.fade-out {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.loader-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+}
+
+.loader-logo {
+    font-family: var(--font-display);
+    font-size: 4rem;
+    font-weight: 900;
+    display: flex;
+    gap: 1rem;
+    overflow: hidden;
+}
+
+.logo-text-reveal {
+    display: inline-block;
+    background: var(--gradient-text);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    opacity: 0;
+    transform: translateY(50px);
+    animation: revealText 1s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+}
+
+.logo-text-reveal.delay {
+    animation-delay: 0.5s;
+}
+
+@keyframes revealText {
+    0% {
+        opacity: 0;
+        transform: translateY(50px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Pulse Effect after reveal */
+.loader-logo {
+    animation: pulseLogo 2s ease-in-out infinite;
+    animation-delay: 2s;
+}
+
+@keyframes pulseLogo {
+
+    0%,
+    100% {
+        transform: scale(1);
+        filter: drop-shadow(0 0 0 transparent);
+    }
+
+    50% {
+        transform: scale(1.05);
+        filter: drop-shadow(0 0 20px var(--red-glow));
+    }
+}
+
+.loader-progress {
+    width: 0%;
+    height: 2px;
+    background: var(--gradient-main);
+    border-radius: 4px;
+    animation: progressLine 4.5s ease-in-out forwards;
+    box-shadow: 0 0 10px var(--red-glow);
+}
+
+@keyframes progressLine {
+    0% {
+        width: 0%;
+        opacity: 0;
+    }
+
+    10% {
+        opacity: 1;
+    }
+
+    100% {
+        width: 200px;
+        opacity: 1;
+    }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .loader-logo {
+        font-size: 2.5rem;
+    }
+}

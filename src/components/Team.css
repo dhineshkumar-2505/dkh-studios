@@ -1,0 +1,301 @@
+.team-section {
+    padding: var(--spacing-4xl) 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.team-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--spacing-lg);
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Premium Animations */
+@keyframes float {
+    0% {
+        transform: translateY(0px);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+
+    100% {
+        transform: translateY(0px);
+    }
+}
+
+@keyframes shine {
+    0% {
+        left: -100%;
+    }
+
+    100% {
+        left: 200%;
+    }
+}
+
+.team-card {
+    padding: var(--spacing-lg);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+    position: relative;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    animation: float 6s ease-in-out infinite;
+}
+
+/* Stagger floating animation */
+.team-card:nth-child(1) {
+    animation-delay: 0s;
+}
+
+.team-card:nth-child(2) {
+    animation-delay: 2s;
+}
+
+.team-card:nth-child(3) {
+    animation-delay: 4s;
+}
+
+.team-card:hover {
+    transform: translateY(-15px) scale(1.02);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    background: rgba(255, 255, 255, 0.07);
+}
+
+/* Shine Effect Overlay */
+.team-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(to right,
+            transparent,
+            rgba(255, 255, 255, 0.1),
+            transparent);
+    transform: skewX(-25deg);
+    transition: 0.5s;
+    pointer-events: none;
+}
+
+.team-card:hover::before {
+    animation: shine 1.5s;
+}
+
+/* Image Styles */
+.team-image-wrapper {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-bottom: var(--spacing-md);
+    border: 3px solid rgba(255, 255, 255, 0.1);
+    position: relative;
+    transition: all 0.5s ease;
+    z-index: 2;
+}
+
+.team-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.7s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.team-card:hover .team-image {
+    transform: scale(1.2);
+}
+
+/* Text Animations */
+.team-name {
+    font-size: 1.5rem;
+    margin-bottom: 0.25rem;
+    color: var(--text-primary);
+    transform: translateY(0);
+    transition: transform 0.3s ease;
+}
+
+.team-role {
+    font-size: 0.9rem;
+    color: var(--red-primary);
+    font-weight: 700;
+    margin-bottom: var(--spacing-sm);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    opacity: 0.9;
+    transition: all 0.3s ease;
+}
+
+.team-card:hover .team-name {
+    transform: translateY(-2px);
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+}
+
+.team-card:hover .team-role {
+    letter-spacing: 3px;
+    color: white;
+}
+
+.team-bio {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    margin-bottom: var(--spacing-md);
+    flex-grow: 1;
+    transition: color 0.3s ease;
+}
+
+.team-card:hover .team-bio {
+    color: rgba(255, 255, 255, 0.9);
+}
+
+/* Social Icons */
+.team-socials {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: auto;
+    opacity: 0.7;
+    transform: translateY(10px);
+    transition: all 0.4s ease;
+}
+
+.team-card:hover .team-socials {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.social-link {
+    font-size: 0.85rem;
+    color: white;
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    background: linear-gradient(135deg, rgba(255, 0, 50, 0.2), rgba(255, 0, 50, 0.3));
+    border: 1px solid rgba(255, 0, 50, 0.3);
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+    min-width: fit-content;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+.social-link:hover {
+    background: linear-gradient(135deg, var(--red-primary), #ff4d4d);
+    border-color: var(--red-primary);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(255, 0, 50, 0.4);
+}
+
+/* Red Glow Specifics */
+.team-card.red-glow-card {
+    border-color: rgba(255, 0, 50, 0.2);
+}
+
+.team-card.red-glow-card:hover {
+    box-shadow: 0 10px 40px rgba(255, 0, 50, 0.15);
+    border-color: rgba(255, 0, 50, 0.5);
+}
+
+.team-card.red-glow-card:hover .team-image-wrapper {
+    border-color: #ff0033;
+    box-shadow: 0 0 25px rgba(255, 0, 50, 0.4);
+    transform: scale(1.05);
+}
+
+.team-card.red-glow-card .team-role {
+    color: #ff0033;
+}
+
+.team-card.red-glow-card:hover .team-role {
+    color: #ff4d4d;
+    text-shadow: 0 0 10px rgba(255, 0, 50, 0.5);
+}
+
+.red-badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: linear-gradient(45deg, #ff0033, #ff4d4d);
+    color: white;
+    font-size: 0.7rem;
+    font-weight: 800;
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-shadow: 0 2px 10px rgba(255, 0, 50, 0.3);
+    z-index: 10;
+}
+
+/* Premium Gold Specifics (Dhinesh) */
+.team-card.premium-card {
+    border-color: rgba(255, 215, 0, 0.2);
+}
+
+.team-card.premium-card:hover {
+    box-shadow: 0 10px 40px rgba(255, 215, 0, 0.15);
+    border-color: rgba(255, 215, 0, 0.5);
+}
+
+.team-card.premium-card:hover .team-image-wrapper {
+    border-color: #FFD700;
+    box-shadow: 0 0 25px rgba(255, 215, 0, 0.4);
+    transform: scale(1.05);
+}
+
+.team-card.premium-card .team-role {
+    color: #FFD700;
+}
+
+.team-card.premium-card:hover .team-role {
+    color: #FFF;
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+}
+
+.premium-badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: linear-gradient(45deg, #FFD700, #FFA500);
+    color: black;
+    font-size: 0.7rem;
+    font-weight: 800;
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-shadow: 0 2px 10px rgba(255, 215, 0, 0.3);
+    z-index: 10;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .team-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 640px) {
+    .team-grid {
+        grid-template-columns: 1fr;
+        max-width: 400px;
+        margin: 0 auto;
+    }
+
+    .social-link {
+        font-size: 0.8rem;
+        padding: 0.4rem 0.8rem;
+    }
+}

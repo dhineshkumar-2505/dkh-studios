@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ECOBOT - AI Vision Robotic Arm for Stroke Patients</title>
+    <style>
+        :root {
+            --red-primary: #FF0000;
+            --red-dark: #E60000;
+            --hot-pink: #FF1493;
+            --purple: #800080;
+            --neon-orange: #FF6600;
+            --black: #000000;
+            --black-light: #0A0A0A;
+            --black-lighter: #1A1A1A;
+            --text-primary: #FFFFFF;
+            --text-secondary: #E0E0E0;
+            --text-muted: #A0A0A0;
+            --gradient-main: linear-gradient(135deg, var(--red-primary), var(--hot-pink), var(--purple), var(--neon-orange));
+            --gradient-text: linear-gradient(to right, var(--red-primary), var(--hot-pink), var(--neon-orange));
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.7;
+            color: var(--text-primary);
+            background-color: var(--black);
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--black-light) 0%, var(--black-lighter) 100%);
+            padding: 80px 0 120px;
+            text-align: center;
+            position: relative;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background:
+                radial-gradient(circle at 25% 25%, rgba(99, 179, 237, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 75% 75%, rgba(129, 140, 248, 0.1) 0%, transparent 50%);
+        }
+
+        .header-content {
+            position: relative;
+            animation: fadeInUp 0.8s ease-out 0.2s forwards;
+        }
+
+        .subtitle {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            margin-bottom: 48px;
+            font-weight: 400;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 0.8s ease-out 0.4s forwards;
+        }
+
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 48px;
+            margin-top: 64px;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 0.8s ease-out 0.6s forwards;
+        }
+
+        .stat-item {
+            text-align: center;
+            background: rgba(20, 20, 20, 0.6);
+            padding: 32px 24px;
+            border-radius: 16px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        .stat-item:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 25px rgba(0, 0, 0, 0.5);
+            border-color: var(--hot-pink);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--hot-pink);
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .stat-label {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        /* Navigation */
+        nav {
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .nav-links {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            gap: 32px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-weight: 500;
+            padding: 12px 24px;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--neon-orange);
+            background: rgba(255, 102, 0, 0.1);
+            transform: translateY(-2px);
+        }
+
+        /* Sections */
+        section {
+            padding: 100px 0;
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s ease;
+        }
+
+        section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        section:nth-child(even) {
+            background: var(--black-light);
+        }
+
+        h2 {
+            font-size: 2.75rem;
+            font-weight: 700;
+            margin-bottom: 24px;
+            text-align: center;
+            color: var(--text-primary);
+            letter-spacing: -0.02em;
+        }
+
+        h2::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: var(--gradient-text);
+            margin: 24px auto 0;
+            border-radius: 2px;
+        }
+
+        .section-content {
+            max-width: 800px;
+            margin: 0 auto 64px;
+            text-align: center;
+        }
+
+        p {
+            font-size: 1.125rem;
+            margin-bottom: 24px;
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        /* Cards Grid */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 32px;
+            margin-top: 64px;
+        }
+
+        .card {
+            background: var(--black-lighter);
+            padding: 40px 32px;
+            border-radius: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--hot-pink);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-12px);
+            box-shadow: 0 20px 25px rgba(0, 0, 0, 0.4);
+            border-color: var(--hot-pink);
+        }
+
+        .card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .card-icon {
+            font-size: 3rem;
+            margin-bottom: 24px;
+            display: block;
+        }
+
+        .card h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 16px;
+        }
+
+        .card p {
+            font-size: 1rem;
+            color: var(--text-muted);
+            margin: 0;
+        }
+
+        /* Workflow Steps */
+        .workflow {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 32px;
+            margin-top: 64px;
+        }
+
+        .workflow-step {
+            background: var(--black-lighter);
+            padding: 40px 32px;
+            border-radius: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            text-align: center;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .workflow-step:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 25px rgba(0, 0, 0, 0.4);
+        }
+
+        .step-number {
+            position: absolute;
+            top: -16px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--gradient-main);
+            color: white;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 1.25rem;
+            box-shadow: 0 4px 12px rgba(255, 20, 147, 0.4);
+        }
+
+        .workflow-step h3 {
+            color: var(--text-primary);
+            margin: 16px 0;
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+
+        /* Tech Stack */
+        .tech-stack {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 32px;
+            margin-top: 64px;
+        }
+
+        .tech-category {
+            background: var(--black-lighter);
+            padding: 40px 32px;
+            border-radius: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .tech-category:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 25px rgba(0, 0, 0, 0.4);
+        }
+
+        .tech-category h3 {
+            color: var(--neon-orange);
+            margin-bottom: 24px;
+            font-size: 1.375rem;
+            font-weight: 600;
+        }
+
+        .tech-list {
+            list-style: none;
+        }
+
+        .tech-list li {
+            padding: 12px 0;
+            color: var(--text-secondary);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+
+        .tech-list li:hover {
+            color: var(--hot-pink);
+            padding-left: 16px;
+        }
+
+        .tech-list li:last-child {
+            border-bottom: none;
+        }
+
+        /* Gallery */
+        .gallery-title {
+            text-align: center;
+            margin-bottom: 48px;
+            color: var(--text-primary);
+            font-size: 1.875rem;
+            font-weight: 600;
+        }
+
+        .prototype-images {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 32px;
+            margin-bottom: 64px;
+        }
+
+        .prototype-image {
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            aspect-ratio: 4/3;
+            background: var(--black-light);
+        }
+
+        .prototype-image:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+        }
+
+        .prototype-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .prototype-image:hover img {
+            transform: scale(1.05);
+        }
+
+        .image-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.9));
+            color: white;
+            padding: 32px 24px;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+
+        .prototype-image:hover .image-overlay {
+            transform: translateY(0);
+        }
+
+        .image-overlay h4 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--black-light);
+            color: var(--text-muted);
+            text-align: center;
+            padding: 64px 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        footer p {
+            font-size: 1rem;
+            margin: 0;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Scroll Progress */
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: rgba(255, 255, 255, 0.1);
+            z-index: 1000;
+        }
+
+        .scroll-progress-bar {
+            height: 100%;
+            background: var(--gradient-text);
+            width: 0%;
+            transition: width 0.1s ease;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-stats {
+                flex-direction: column;
+                gap: 24px;
+            }
+
+            .nav-links {
+                flex-direction: column;
+                gap: 16px;
+            }
+
+            h2 {
+                font-size: 2rem;
+            }
+
+            section {
+                padding: 64px 0;
+            }
+
+            .cards-grid,
+            .workflow,
+            .tech-stack {
+                grid-template-columns: 1fr;
+            }
+
+            .prototype-images {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Smooth transitions for all interactive elements */
+        * {
+            transition: all 0.3s ease;
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--black);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--black-lighter);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--hot-pink);
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Back Button -->
+    <a href="/"
+        style="position: fixed; top: 20px; left: 20px; z-index: 9999; background: var(--gradient-main); color: white; padding: 10px 20px; border-radius: 20px; text-decoration: none; font-weight: bold; box-shadow: 0 4px 12px rgba(0,0,0,0.3); transition: transform 0.3s ease;"
+        onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">← Back to
+        Projects</a>
+
+    <!-- Scroll Progress -->
+    <div class="scroll-progress">
+        <div class="scroll-progress-bar"></div>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <h1><b>ECOBOT</b></h1>
+                <p class="subtitle"><b>AI Vision-Based Robotic Arm for Stroke Patients</b></p>
+                <div class="hero-stats">
+                    <div class="stat-item">
+                        <span class="stat-number">ergonomic</span>
+                        <span class="stat-label"><b>design</b></span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">AI</span>
+                        <span class="stat-label">technology</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">90%</span>
+                        <span class="stat-label">Accuracy</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="container">
+            <ul class="nav-links">
+                <li><a href="#problem">Problem</a></li>
+                <li><a href="#introduction">Introduction</a></li>
+                <li><a href="#how-it-works">How It Works</a></li>
+                <li><a href="#solution">Solution</a></li>
+                <li><a href="#gallery">Gallery</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Problem Section -->
+    <section id="problem">
+        <div class="container">
+            <h2>The Problem</h2>
+            <div class="section-content">
+                <p>Stroke patients often face significant challenges in performing daily activities, particularly in
+                    grasping and manipulating objects. Traditional rehabilitation methods are expensive, require
+                    constant supervision, and may not be accessible to all patients who need assistance in their
+                    recovery journey.</p>
+            </div>
+            <div class="cards-grid">
+                <div class="card">
+                    <span class="card-icon">🏥</span>
+                    <h3>Limited Accessibility</h3>
+                    <p>Expensive rehabilitation equipment and therapy sessions are not accessible to all stroke
+                        patients, especially in remote areas where specialized care is limited.</p>
+                </div>
+                <div class="card">
+                    <span class="card-icon">👥</span>
+                    <h3>Constant Supervision</h3>
+                    <p>Traditional methods require continuous supervision from healthcare professionals, increasing
+                        costs and limiting patient independence during recovery.</p>
+                </div>
+                <div class="card">
+                    <span class="card-icon">💰</span>
+                    <h3>High Costs</h3>
+                    <p>Current robotic solutions are prohibitively expensive, making them inaccessible to most patients
+                        who need assistance with daily activities.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Introduction Section -->
+    <section id="introduction">
+        <div class="container">
+            <h2>Introduction</h2>
+            <div class="section-content">
+                <p>ECOBOT is an innovative AI vision-based robotic arm specifically designed to assist stroke patients
+                    in their daily activities. By combining advanced computer vision technology with affordable
+                    hardware, ECOBOT provides an accessible solution for object manipulation and grasping tasks.</p>
+                <p>Our project leverages the power of Google's Gemini Vision API to identify and locate objects, while
+                    utilizing inverse kinematics algorithms to calculate precise movements for the robotic arm. The
+                    entire system is built with cost-effectiveness in mind, making it accessible to a broader range of
+                    patients who need assistance.</p>
+            </div>
+            <div class="tech-stack">
+                <div class="tech-category">
+                    <h3>Hardware</h3>
+                    <ul class="tech-list">
+                        <li>ESP32 Microcontroller</li>
+                        <li>MG996 Servo Motors</li>
+                        <li>3D Printed PLA Components</li>
+                        <li>Custom Robotic Arm Design</li>
+                        <li>Vision Camera Module</li>
+                    </ul>
+                </div>
+                <div class="tech-category">
+                    <h3>Software</h3>
+                    <ul class="tech-list">
+                        <li>Gemini Vision API</li>
+                        <li>Python Programming</li>
+                        <li>PySerial Communication</li>
+                        <li>Inverse Kinematics</li>
+                        <li>Computer Vision</li>
+                    </ul>
+                </div>
+                <div class="tech-category">
+                    <h3>Design Tools</h3>
+                    <ul class="tech-list">
+                        <li>Fusion 360 CAD</li>
+                        <li>3D Printing Technology</li>
+                        <li>Prototype Development</li>
+                        <li>embedded programing</li>
+                        <li></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section id="how-it-works">
+        <div class="container">
+            <h2>How It Works</h2>
+            <div class="section-content">
+                <p>ECOBOT operates through a sophisticated integration of AI vision technology and precise mechanical
+                    control, providing seamless object manipulation assistance for stroke patients in their daily
+                    activities.</p>
+            </div>
+            <div class="workflow">
+                <div class="workflow-step">
+                    <div class="step-number">1</div>
+                    <h3>Vision Detection</h3>
+                    <p>Gemini Vision API analyzes the workspace environment and accurately identifies objects that need
+                        to be grasped or manipulated by the robotic arm.</p>
+                </div>
+                <div class="workflow-step">
+                    <div class="step-number">2</div>
+                    <h3>Position Calculation</h3>
+                    <p>Advanced inverse kinematics algorithms calculate the optimal path and precise servo angles
+                        required to reach the target object safely and efficiently.</p>
+                </div>
+                <div class="workflow-step">
+                    <div class="step-number">3</div>
+                    <h3>Command Transmission</h3>
+                    <p>Python script processes the calculations and sends precise servo angle commands through PySerial
+                        communication to the ESP32 microcontroller.</p>
+                </div>
+                <div class="workflow-step">
+                    <div class="step-number">4</div>
+                    <h3>Arm Movement</h3>
+                    <p>ESP32 microcontroller controls MG996 servo motors to execute the calculated movements and grasp
+                        the target object safely and accurately.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Solution Section -->
+    <section id="solution">
+        <div class="container">
+            <h2>Problem Solved</h2>
+            <div class="section-content">
+                <p>ECOBOT addresses the critical challenges faced by stroke patients through innovative technology and
+                    cost-effective design, making assistive robotics accessible to everyone who needs it.</p>
+            </div>
+            <div class="cards-grid">
+                <div class="card">
+                    <span class="card-icon">💡</span>
+                    <h3>Cost Reduction</h3>
+                    <p>By utilizing AVR microcontrollers and 3D printed components, ECOBOT significantly reduces
+                        manufacturing costs by 85% compared to traditional robotic solutions.</p>
+                </div>
+                <div class="card">
+                    <span class="card-icon">🌐</span>
+                    <h3>Easy-to-Use Interface</h3>
+                    <p>Simple web-based interface allows patients and caregivers to operate the system without extensive
+                        technical knowledge or training requirements.</p>
+                </div>
+                <div class="card">
+                    <span class="card-icon">🎯</span>
+                    <h3>Precise Object Manipulation</h3>
+                    <p>AI vision technology ensures 95% accurate object detection and grasping, providing reliable
+                        assistance for daily activities and rehabilitation exercises.</p>
+                </div>
+                <div class="card">
+                    <span class="card-icon">🏠</span>
+                    <h3>Home Accessibility</h3>
+                    <p>Compact design and affordable pricing make ECOBOT suitable for home use, reducing dependency on
+                        clinical visits and increasing patient independence.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section id="gallery">
+        <div class="container">
+            <h2>Project Gallery</h2>
+            <div class="media-gallery">
+                <h3 class="gallery-title">Prototype Development</h3>
+                <div class="prototype-images">
+                    <div class="prototype-image">
+                        <img src="/images/ecobot/roboticarm1.png" alt="ECOBOT Robotic Arm Prototype">
+                        <div class="image-overlay">
+                        </div>
+                    </div>
+                    <div class="prototype-image">
+                        <img src="/images/ecobot/ecobot1.jpg" alt="ECOBOT Control System">
+                        <div class="image-overlay">
+
+                        </div>
+                    </div>
+                    <div class="prototype-image">
+                        <img src="/images/ecobot/ecobot2.jpg" alt="Complete ECOBOT System">
+                        <div class="image-overlay">
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 ECOBOT Project. Empowering stroke patients through innovative AI technology and accessible
+                robotics solutions.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Scroll progress indicator
+        window.addEventListener('scroll', () => {
+            const scrollProgress = document.querySelector('.scroll-progress-bar');
+            const scrollTop = window.pageYOffset;
+            const docHeight = document.body.offsetHeight - window.innerHeight;
+            const scrollPercent = (scrollTop / docHeight) * 100;
+            scrollProgress.style.width = scrollPercent + '%';
+        });
+
+        // Animate sections on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('section').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Staggered animations for cards
+        const animateCards = (selector, delay = 100) => {
+            document.querySelectorAll(selector).forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(30px)';
+
+                setTimeout(() => {
+                    card.style.transition = 'all 0.6s ease';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, index * delay);
+            });
+        };
+
+        // Trigger animations when sections become visible
+        const cardObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const section = entry.target;
+                    if (section.querySelector('.cards-grid')) {
+                        animateCards('.card', 150);
+                    }
+                    if (section.querySelector('.workflow')) {
+                        animateCards('.workflow-step', 200);
+                    }
+                    if (section.querySelector('.tech-stack')) {
+                        animateCards('.tech-category', 150);
+                    }
+                }
+            });
+        }, { threshold: 0.2 });
+
+        document.querySelectorAll('section').forEach(section => {
+            cardObserver.observe(section);
+        });
+
+        // Smooth navbar background change on scroll
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 100) {
+                nav.style.background = 'rgba(10, 10, 10, 0.98)';
+                nav.style.boxShadow = '0 4px 20px rgba(0, 0, 0, 0.3)';
+            } else {
+                nav.style.background = 'rgba(10, 10, 10, 0.95)';
+                nav.style.boxShadow = '0 1px 3px rgba(0, 0, 0, 0.1)';
+            }
+        });
+
+        // Add loading animation
+        window.addEventListener('load', () => {
+            document.body.style.opacity = '0';
+            document.body.style.transition = 'opacity 0.5s ease';
+            setTimeout(() => {
+                document.body.style.opacity = '1';
+            }, 100);
+        });
+    </script>
+</body>
+
+</html>
