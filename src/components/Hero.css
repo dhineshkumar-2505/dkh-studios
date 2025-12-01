@@ -188,7 +188,7 @@
 
 .scroll-indicator {
     position: absolute;
-    bottom: 1px;
+    bottom: -10px;
     left: px;
     transform: translateX(0);
     display: flex;
