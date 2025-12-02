@@ -7,12 +7,40 @@ import Home from './pages/Home'
 import Register from './pages/Register'
 import Loader from './components/Loader'
 
-// Scroll to top on route change
+// Scroll to top on route change, or to hash if present
 const ScrollToTop = () => {
-    const { pathname } = useLocation()
+    const { pathname, hash } = useLocation()
+
     useEffect(() => {
+        // Disable browser's default scroll restoration
+        if ('scrollRestoration' in window.history) {
+            window.history.scrollRestoration = 'manual'
+        }
+
+        // Always scroll to top on mount/refresh
         window.scrollTo(0, 0)
-    }, [pathname])
+
+        // If it's a refresh (no pathname change), clear hash to force Home
+        // But if it's a navigation, we might want to respect hash? 
+        // User said "refresh home page only have to return".
+        // So we clear hash on mount.
+        if (window.location.hash) {
+            window.history.replaceState(null, '', window.location.pathname)
+        }
+    }, []) // Run only on mount
+
+    useEffect(() => {
+        // Handle navigation clicks that set hash
+        if (hash) {
+            setTimeout(() => {
+                const element = document.querySelector(hash)
+                if (element) {
+                    element.scrollIntoView({ behavior: 'smooth', block: 'start' })
+                }
+            }, 100)
+        }
+    }, [pathname, hash])
+
     return null
 }
 

@@ -1,0 +1,630 @@
+/* ========================================
+   MASSIVE WALLET UI OVERHAUL
+   Premium Purple/Black/Orange Theme
+   Extensive Animations & Effects
+   ======================================== */
+
+/* Scene Container */
+.wallet-scene {
+    position: relative;
+    width: 100%;
+    min-height: 800px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 100px 20px;
+    perspective: 3000px;
+    background: transparent;
+    overflow: visible;
+}
+
+/* 3D Wallet Container - Increased Size */
+.wallet-3d {
+    position: relative;
+    width: 550px;
+    /* Increased from 480px */
+    height: 340px;
+    /* Increased from 300px */
+    transform-style: preserve-3d;
+    transition: all 1.5s cubic-bezier(0.25, 1, 0.5, 1);
+    filter: drop-shadow(0 50px 100px rgba(0, 0, 0, 0.8));
+    animation: walletFloatComplex 10s ease-in-out infinite;
+}
+
+@keyframes walletFloatComplex {
+
+    0%,
+    100% {
+        transform: translateY(0) rotateX(0deg) rotateZ(0deg);
+    }
+
+    25% {
+        transform: translateY(-10px) rotateX(2deg) rotateZ(1deg);
+    }
+
+    50% {
+        transform: translateY(-5px) rotateX(0deg) rotateZ(0deg);
+    }
+
+    75% {
+        transform: translateY(-15px) rotateX(3deg) rotateZ(-1deg);
+    }
+}
+
+/* ========================================
+   CLOSED STATE - PREMIUM PURPLE/BLACK/ORANGE
+   ======================================== */
+
+.wallet-closed-front {
+    position: absolute;
+    inset: 0;
+    background: #1a0b2e;
+    /* Deep Purple Base */
+    border-radius: 20px;
+    box-shadow:
+        inset 0 2px 5px rgba(255, 255, 255, 0.1),
+        inset 0 -2px 5px rgba(0, 0, 0, 0.8),
+        0 30px 80px rgba(0, 0, 0, 0.7);
+    overflow: hidden;
+    transform-style: preserve-3d;
+    z-index: 10;
+}
+
+/* Premium Leather Texture - Complex Gradient */
+.premium-leather-texture {
+    position: absolute;
+    inset: 0;
+    background:
+        /* Noise Texture */
+        url("data:image/svg+xml,%3Csvg width='200' height='200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.6' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.1'/%3E%3C/svg%3E"),
+        /* Color Gradients */
+        radial-gradient(circle at 80% 20%, rgba(255, 165, 0, 0.15) 0%, transparent 50%),
+        /* Orange Glow */
+        radial-gradient(circle at 20% 80%, rgba(138, 43, 226, 0.2) 0%, transparent 50%),
+        /* Purple Glow */
+        linear-gradient(135deg, #2e1045 0%, #000000 60%, #1a0b2e 100%);
+    /* Base */
+    background-blend-mode: overlay, screen, screen, normal;
+    opacity: 1;
+}
+
+/* Ambient Glow Overlay */
+.ambient-glow-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(45deg, transparent 40%, rgba(255, 255, 255, 0.05) 50%, transparent 60%);
+    background-size: 200% 200%;
+    animation: ambientSheen 8s infinite linear;
+    pointer-events: none;
+}
+
+@keyframes ambientSheen {
+    0% {
+        background-position: 200% 0%;
+    }
+
+    100% {
+        background-position: -200% 0%;
+    }
+}
+
+/* Neon Stitching */
+.neon-stitching {
+    position: absolute;
+    inset: 16px;
+    border: 2px dashed rgba(157, 78, 221, 0.4);
+    /* Purple Thread */
+    border-radius: 14px;
+    box-shadow: 0 0 5px rgba(157, 78, 221, 0.2);
+    pointer-events: none;
+}
+
+/* Embossed Tag */
+.embossed-tag {
+    position: absolute;
+    top: 30px;
+    right: 30px;
+    padding: 10px 20px;
+    border: 1px solid rgba(255, 165, 0, 0.1);
+    /* Subtle Orange Border */
+    border-radius: 6px;
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.4) 0%, rgba(255, 255, 255, 0.01) 100%);
+    box-shadow: inset 2px 2px 4px rgba(0, 0, 0, 0.9), 1px 1px 0 rgba(255, 255, 255, 0.05);
+    transform: translateZ(2px);
+
+    /* Pressed Open Button */
+    .pressed-open-btn {
+        position: absolute;
+        bottom: 50px;
+        left: 50%;
+        transform: translateX(-50%);
+        padding: 16px 50px;
+        background: #150824;
+        border: none;
+        border-radius: 40px;
+        box-shadow:
+            inset 3px 3px 6px rgba(0, 0, 0, 0.9),
+            inset -1px -1px 2px rgba(255, 255, 255, 0.1),
+            0 0 15px rgba(138, 43, 226, 0.1);
+        cursor: pointer;
+        transition: all 0.4s ease;
+        overflow: hidden;
+    }
+
+    .pressed-open-btn:hover {
+        box-shadow:
+            inset 4px 4px 10px rgba(0, 0, 0, 0.95),
+            inset -1px -1px 2px rgba(255, 255, 255, 0.2),
+            0 0 25px rgba(138, 43, 226, 0.3);
+        transform: translateX(-50%) scale(0.98);
+    }
+
+    .btn-text {
+        position: relative;
+        z-index: 2;
+        color: rgba(255, 255, 255, 0.7);
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        font-weight: 600;
+    }
+
+    .btn-glow {
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(circle, rgba(138, 43, 226, 0.2) 0%, transparent 70%);
+        animation: btnPulse 3s infinite;
+        z-index: 1;
+    }
+
+    @keyframes btnPulse {
+
+        0%,
+        100% {
+            transform: scale(1);
+            opacity: 0.5;
+        }
+
+        50% {
+            transform: scale(1.2);
+            opacity: 0.8;
+        }
+    }
+
+    /* ========================================
+   OPEN STATE - INTERIOR
+   ======================================== */
+
+    .wallet-interior {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        transform-style: preserve-3d;
+        opacity: 0;
+        animation: interiorFadeIn 1s ease 0.5s forwards;
+    }
+
+    @keyframes interiorFadeIn {
+        to {
+            opacity: 1;
+        }
+    }
+
+    .wallet-3d.opening .wallet-closed-front,
+    .wallet-3d.open .wallet-closed-front {
+        animation: closedFadeOut 0.8s ease forwards;
+    }
+
+    @keyframes closedFadeOut {
+        0% {
+            opacity: 1;
+            transform: rotateY(0);
+        }
+
+        100% {
+            opacity: 0;
+            transform: rotateY(-30deg);
+            pointer-events: none;
+        }
+    }
+
+    /* Panels */
+    .wallet-panel {
+        position: relative;
+        width: 50%;
+        height: 100%;
+        transform-style: preserve-3d;
+        transition: transform 1.5s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+
+    .left-panel {
+        transform-origin: right center;
+        border-radius: 20px 0 0 20px;
+    }
+
+    .right-panel {
+        transform-origin: left center;
+        border-radius: 0 20px 20px 0;
+    }
+
+    .wallet-3d.opening .left-panel,
+    .wallet-3d.open .left-panel {
+        transform: rotateY(-15deg);
+    }
+
+    .wallet-3d.opening .right-panel,
+    .wallet-3d.open .right-panel {
+        transform: rotateY(15deg);
+    }
+
+    .wallet-3d.closing .left-panel,
+    .wallet-3d.closing .right-panel {
+        transform: rotateY(0deg);
+    }
+
+    /* Interior Leather */
+    .panel-leather-interior {
+        position: absolute;
+        inset: 0;
+        background: #1a0b2e;
+        background-image:
+            url("data:image/svg+xml,%3Csvg width='100' height='100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.05'/%3E%3C/svg%3E"),
+            linear-gradient(135deg, #250e38 0%, #0f0518 100%);
+        border-radius: inherit;
+        box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.8);
+    }
+
+    /* Hinge/Spine */
+    .wallet-spine-hinge {
+        position: absolute;
+        left: 50%;
+        top: 0;
+        width: 14px;
+        height: 100%;
+        background: linear-gradient(90deg, #0f0518 0%, #250e38 50%, #0f0518 100%);
+        transform: translateX(-50%);
+        z-index: 5;
+        box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.9);
+    }
+
+    /* ========================================
+   CARD SECTIONS & POCKETS
+   ======================================== */
+
+    .card-section {
+        position: absolute;
+        bottom: 50px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 220px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+        z-index: 1;
+    }
+
+    .card-slot-label {
+        font-size: 0.8rem;
+        color: rgba(255, 165, 0, 0.6);
+        /* Orange Tint */
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        font-weight: 600;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+        opacity: 0;
+        animation: labelFadeIn 1s ease 1s forwards;
+    }
+
+    @keyframes labelFadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .card-pocket-container {
+        position: relative;
+        width: 100%;
+        height: 130px;
+    }
+
+    .leather-pocket-front {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 80px;
+        background: linear-gradient(180deg, #250e38 0%, #1a0b2e 100%);
+        border-radius: 10px 10px 0 0;
+        box-shadow:
+            0 -1px 2px rgba(255, 255, 255, 0.05),
+            0 5px 15px rgba(0, 0, 0, 0.6);
+        z-index: 10;
+        pointer-events: none;
+    }
+
+    .leather-pocket-front::before {
+        content: '';
+        position: absolute;
+        inset: 8px;
+        border-top: 1px dashed rgba(157, 78, 221, 0.3);
+        border-left: 1px dashed rgba(157, 78, 221, 0.3);
+        border-right: 1px dashed rgba(157, 78, 221, 0.3);
+        border-radius: 6px 6px 0 0;
+        bottom: -8px;
+    }
+
+    .luxury-card {
+        position: absolute;
+        bottom: 20px;
+        left: 12px;
+        right: 12px;
+        height: 130px;
+        background: #000;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+        z-index: 5;
+        box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.5);
+        overflow: hidden;
+    }
+
+    .luxury-card:hover {
+        transform: translateY(-30px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+        z-index: 15;
+    }
+
+    .card-strip {
+        height: 25px;
+        width: 100%;
+    }
+
+    .instagram-strip {
+        background: linear-gradient(90deg, #833ab4, #fd1d1d, #fcb045);
+    }
+
+    .youtube-strip {
+        background: linear-gradient(90deg, #ff0000, #cc0000);
+    }
+
+    .card-name-preview {
+        position: absolute;
+        top: 35px;
+        left: 15px;
+        font-family: 'Montserrat', sans-serif;
+        font-size: 0.75rem;
+        color: rgba(255, 255, 255, 0.6);
+        letter-spacing: 0.5px;
+    }
+
+    .luxury-card.popped-out {
+        opacity: 0;
+        pointer-events: none;
+    }
+
+    /* ========================================
+   CINEMATIC POPUP & ANIMATIONS
+   ======================================== */
+
+    .cinematic-popup-overlay {
+        position: fixed;
+
+        from {
+            transform: translateY(150px) scale(0.7) rotateX(30deg);
+            opacity: 0;
+        }
+
+        to {
+            transform: translateY(0) scale(1) rotateX(0deg);
+            opacity: 1;
+        }
+    }
+
+    .card-gradient-bg {
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+    }
+
+    .instagram-gradient {
+        background: linear-gradient(135deg, #405de6, #5851db, #833ab4, #c13584, #e1306c, #fd1d1d);
+    }
+
+    .youtube-gradient {
+        background: linear-gradient(135deg, #ff0000, #cc0000, #990000);
+    }
+
+    /* Holographic Overlay */
+    .card-holographic-overlay {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(125deg, transparent 30%, rgba(255, 255, 255, 0.1) 40%, transparent 50%, rgba(255, 255, 255, 0.1) 60%, transparent 70%);
+        background-size: 200% 200%;
+        animation: holoShift 5s infinite linear;
+        mix-blend-mode: overlay;
+        z-index: 1;
+        pointer-events: none;
+    }
+
+    @keyframes holoShift {
+        0% {
+            background-position: 200% 0%;
+        }
+
+        100% {
+            background-position: -200% 0%;
+        }
+    }
+
+    /* Particles */
+    .card-particles {
+        position: absolute;
+        inset: 0;
+        background-image: radial-gradient(circle, rgba(255, 255, 255, 0.2) 1px, transparent 1px);
+        background-size: 20px 20px;
+        opacity: 0.3;
+        z-index: 1;
+        animation: particleDrift 20s linear infinite;
+    }
+
+    @keyframes particleDrift {
+        0% {
+            transform: translateY(0);
+        }
+
+        100% {
+            transform: translateY(-50px);
+        }
+    }
+
+    .card-glow-border {
+        position: absolute;
+        inset: 0;
+        border-radius: 20px;
+        box-shadow: inset 0 0 30px rgba(255, 255, 255, 0.4);
+        z-index: 2;
+        pointer-events: none;
+        animation: borderPulse 4s infinite ease-in-out;
+    }
+
+    @keyframes borderPulse {
+
+        0%,
+        100% {
+            opacity: 0.5;
+        }
+
+        50% {
+            opacity: 1;
+        }
+    }
+
+    .card-content-layout {
+        position: relative;
+        z-index: 3;
+        height: 100%;
+        padding: 30px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        color: white;
+    }
+
+    .card-top-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .brand-logo svg {
+        width: 32px;
+        height: 32px;
+        filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+    }
+
+    .contactless-icon svg {
+        width: 28px;
+        height: 28px;
+        opacity: 0.9;
+    }
+
+    .card-middle-row {
+        display: flex;
+        align-items: center;
+        gap: 25px;
+    }
+
+    .qr-frame {
+        width: 100px;
+        height: 100px;
+        background: rgba(255, 255, 255, 0.9);
+        padding: 8px;
+        border-radius: 12px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+        transform: rotate(-2deg);
+        transition: transform 0.3s ease;
+    }
+
+    .qr-frame:hover {
+        transform: rotate(0deg) scale(1.05);
+    }
+
+    .qr-code-img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+    }
+
+    .card-details h3 {
+        font-size: 1.8rem;
+        font-weight: 800;
+        margin: 0 0 5px 0;
+        text-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+        letter-spacing: -0.5px;
+    }
+
+    .card-handle {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 1rem;
+        opacity: 0.9;
+        letter-spacing: 1px;
+        font-weight: 500;
+    }
+
+    .luxury-action-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        width: 100%;
+        padding: 14px;
+        background: rgba(255, 255, 255, 0.2);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        border-radius: 14px;
+        color: white;
+        text-decoration: none;
+        font-weight: 700;
+        backdrop-filter: blur(15px);
+        transition: all 0.3s ease;
+        text-transform: uppercase;
+        font-size: 0.9rem;
+        letter-spacing: 1px;
+    }
+
+    .luxury-action-btn:hover {
+        background: rgba(255, 255, 255, 0.35);
+        transform: translateY(-3px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        .wallet-3d {
+            width: 360px;
+            height: 240px;
+        }
+
+        .luxury-card-full {
+            width: 340px;
+            height: 210px;
+        }
+
+        .qr-frame {
+            width: 80px;
+            height: 80px;
+        }
+
+        .card-details h3 {
+            font-size: 1.4rem;
+        }
+    }

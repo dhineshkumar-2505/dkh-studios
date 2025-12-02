@@ -755,3 +755,218 @@
         height: 380px !important;
     }
 }
+
+/* ========================================
+   PERFORMANCE OPTIMIZATIONS
+   For Buttery Smooth Slider Animations
+   ======================================== */
+
+/* GPU Acceleration for Swiper Container */
+.projects-swiper {
+    will-change: transform;
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    perspective: 1000px;
+    -webkit-perspective: 1000px;
+}
+
+/* GPU Acceleration for Slides */
+.projects-swiper .swiper-slide {
+    will-change: transform;
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+}
+
+/* GPU Acceleration for Project Cards */
+.project-card {
+    will-change: transform, box-shadow;
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+}
+
+/* GPU Acceleration for Images */
+.project-image {
+    will-change: transform;
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+}
+
+/* Smooth Font Rendering */
+.projects-swiper * {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Mobile-Specific Performance Optimizations */
+@media (max-width: 768px) {
+    .projects-swiper {
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .project-card {
+        transform: translate3d(0, 0, 0);
+        -webkit-transform: translate3d(0, 0, 0);
+    }
+
+    /* Reduce complexity on mobile for better performance */
+    .project-card:hover .project-image {
+        transform: scale(1.05);
+    }
+}
+
+/* ========================================
+   ULTRA-SMOOTH PERFORMANCE OPTIMIZATIONS
+   Apple-Style Buttery Animations - 60FPS Target
+   ======================================== */
+
+/* GPU Layer Promotion & Hardware Acceleration */
+.projects-swiper {
+    will-change: transform, opacity;
+    transform: translate3d(0, 0, 0);
+    -webkit-transform: translate3d(0, 0, 0);
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    perspective: 2000px;
+    -webkit-perspective: 2000px;
+    transform-style: preserve-3d;
+    -webkit-transform-style: preserve-3d;
+    contain: layout style paint;
+    -webkit-font-smoothing: subpixel-antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Slide GPU Acceleration */
+.projects-swiper .swiper-slide {
+    will-change: transform, opacity, filter;
+    transform: translate3d(0, 0, 0);
+    -webkit-transform: translate3d(0, 0, 0);
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    transform-style: preserve-3d;
+    -webkit-transform-style: preserve-3d;
+    -webkit-font-smoothing: antialiased;
+    isolation: isolate;
+}
+
+/* Project Card Ultra-Smooth Transforms */
+.project-card {
+    will-change: transform, box-shadow, opacity;
+    transform: translate3d(0, 0, 0) scale(1);
+    -webkit-transform: translate3d(0, 0, 0) scale(1);
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+        box-shadow 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+        opacity 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    contain: layout style;
+}
+
+/* Image GPU Acceleration */
+.project-image {
+    will-change: transform, filter;
+    transform: translate3d(0, 0, 0) scale(1);
+    -webkit-transform: translate3d(0, 0, 0) scale(1);
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    image-rendering: -webkit-optimize-contrast;
+}
+
+/* Swiper Wrapper Optimization */
+.projects-swiper .swiper-wrapper {
+    will-change: transform;
+    transform: translate3d(0, 0, 0);
+    -webkit-transform: translate3d(0, 0, 0);
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    transition-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Active Slide Enhancement - Center Card Glow */
+.swiper-slide-active .project-card {
+    transform: translate3d(0, 0, 0) scale(1.05);
+    -webkit-transform: translate3d(0, 0, 0) scale(1.05);
+    box-shadow: 0 25px 70px rgba(255, 71, 87, 0.5),
+        0 0 40px rgba(255, 71, 87, 0.3);
+    filter: brightness(1.1);
+    z-index: 10;
+}
+
+/* Navigation Buttons - Smooth Interactions */
+.projects-swiper .swiper-button-next,
+.projects-swiper .swiper-button-prev {
+    will-change: transform, opacity, background;
+    transform: translate3d(0, 0, 0);
+    -webkit-transform: translate3d(0, 0, 0);
+    backface-visibility: hidden;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.projects-swiper .swiper-button-next:active,
+.projects-swiper .swiper-button-prev:active {
+    transform: translate3d(0, 0, 0) scale(0.9);
+    -webkit-transform: translate3d(0, 0, 0) scale(0.9);
+}
+
+/* Pagination Smooth Transitions */
+.projects-swiper .swiper-pagination-bullet {
+    will-change: transform, opacity, width;
+    transform: translate3d(0, 0, 0);
+    -webkit-transform: translate3d(0, 0, 0);
+    backface-visibility: hidden;
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Prevent Animation Jank on Rapid Clicks */
+.projects-swiper.swiper-pointer-events {
+    touch-action: pan-y;
+}
+
+/* Mobile Ultra-Smooth Optimizations */
+@media (max-width: 768px) {
+    .projects-swiper {
+        -webkit-overflow-scrolling: touch;
+        perspective: 1500px;
+    }
+
+    .project-card {
+        transition-duration: 0.3s;
+        transform: translate3d(0, 0, 0);
+        -webkit-transform: translate3d(0, 0, 0);
+    }
+
+    .project-image {
+        image-rendering: auto;
+        -webkit-transform: translate3d(0, 0, 0);
+    }
+
+    .swiper-slide-active .project-card {
+        box-shadow: 0 15px 40px rgba(255, 71, 87, 0.4);
+    }
+}
+
+/* High Refresh Rate Display Optimization */
+@media (min-resolution: 120dpi) {
+    .projects-swiper {
+        -webkit-font-smoothing: subpixel-antialiased;
+    }
+}
+
+/* Reduce Motion for Accessibility */
+@media (prefers-reduced-motion: reduce) {
+
+    .projects-swiper,
+    .project-card,
+    .project-image {
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+    }
+}

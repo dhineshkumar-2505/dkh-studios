@@ -9,8 +9,14 @@ const CustomCursor = () => {
     const [particles, setParticles] = useState([])
 
     useEffect(() => {
-        // Check if device supports hover (not touch device)
-        const isTouchDevice = window.matchMedia('(hover: none)').matches
+        // Enhanced detection for mobile and tablet devices
+        const isTouchDevice =
+            window.matchMedia('(hover: none)').matches ||
+            window.matchMedia('(pointer: coarse)').matches ||
+            ('ontouchstart' in window) ||
+            (navigator.maxTouchPoints > 0) ||
+            window.innerWidth <= 1024 // Tablets and below
+
         if (isTouchDevice) {
             setIsHidden(true)
             return

@@ -7,6 +7,7 @@ import Projects from '../components/Projects'
 import Workflow from '../components/Workflow'
 import Contact from '../components/Contact'
 import Team from '../components/Team'
+import Wallet from '../components/Wallet'
 
 const Home = () => {
     return (
@@ -19,6 +20,7 @@ const Home = () => {
             <Workflow />
             <Contact />
             <Team />
+            <Wallet />
         </>
     )
 }

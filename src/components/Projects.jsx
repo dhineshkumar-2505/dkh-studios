@@ -133,7 +133,23 @@ const Projects = () => {
                             }}
                             modules={[EffectCoverflow, Navigation, Pagination]}
                             loop={visibleProjects.length > 1}
-                            speed={600}
+                            speed={400}
+                            touchRatio={1.5}
+                            resistance={true}
+                            resistanceRatio={0.85}
+                            freeMode={false}
+                            longSwipes={true}
+                            longSwipesRatio={0.3}
+                            longSwipesMs={200}
+                            followFinger={true}
+                            threshold={5}
+                            touchStartPreventDefault={false}
+                            simulateTouch={true}
+                            shortSwipes={true}
+                            preventInteractionOnTransition={false}
+                            allowTouchMove={true}
+                            watchSlidesProgress={true}
+                            runCallbacksOnInit={true}
                             onSlideChange={playClickSound}
                             onTouchStart={handleUserInteraction}
                             onSlideChangeTransitionStart={handleUserInteraction}

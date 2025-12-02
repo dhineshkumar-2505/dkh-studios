@@ -431,12 +431,37 @@
         ::-webkit-scrollbar-thumb:hover {
             background: var(--hot-pink);
         }
+
+        /* Mobile Optimization Fixes */
+        @media (max-width: 768px) {
+            nav {
+                position: relative !important;
+            }
+
+            .container {
+                padding: 0 16px !important;
+            }
+
+            section {
+                padding: 48px 0 !important;
+            }
+        }
+
+        /* Mobile Back Button Optimization */
+        @media (max-width: 768px) {
+            #backButton {
+                padding: 8px 16px !important;
+                font-size: 0.875rem !important;
+                top: 10px !important;
+                left: 10px !important;
+            }
+        }
     </style>
 </head>
 
 <body>
     <!-- Back Button -->
-    <a href="/"
+    <a href="/" id="backButton" onclick="window.location.href='/#projects'; return false;"
         style="position: fixed; top: 20px; left: 20px; z-index: 9999; background: var(--gradient-main); color: white; padding: 10px 20px; border-radius: 20px; text-decoration: none; font-weight: bold; box-shadow: 0 4px 12px rgba(0,0,0,0.3); transition: transform 0.3s ease;"
         onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">← Back to
         Projects</a>
